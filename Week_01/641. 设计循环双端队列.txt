@@ -1,0 +1,105 @@
+class MyCircularDeque {
+public:
+    /** Initialize your data structure here. Set the size of the deque to be k. */
+    int max_size;
+    int rear,front;
+    int *data;
+    //使用数组来模拟双端循环队列
+    //初始化数据
+    MyCircularDeque(int k) {
+        max_size = k+1;
+        rear = front = 0;
+        data = new int[k+1];
+    }
+    
+    /** Adds an item at the front of Deque. Return true if the operation is successful. */
+    //往头插入数据是front++，然后给data[front] 赋值
+    bool insertFront(int value) {
+        if (isFull()) {
+            return false;
+        }
+        front = (front + 1)%max_size;
+        data[front]=value;
+        return true;
+    }
+    
+    /** Adds an item at the rear of Deque. Return true if the operation is successful. */
+    //向尾部插入，先赋值，rear--再后移
+    bool insertLast(int value) {
+        if (isFull()) {
+            return false;
+        }
+        data[rear] = value;
+        rear = (rear - 1 + max_size) % max_size;
+        return true;
+    }
+    
+    /** Deletes an item from the front of Deque. Return true if the operation is successful. */
+    //头部删除，头指针往后移
+    bool deleteFront() {
+        if (isEmpty()) {
+            return false;
+        }
+        front = (front - 1 +max_size) % max_size;
+        return true; 
+    }
+    
+    /** Deletes an item from the rear of Deque. Return true if the operation is successful. */
+    //尾部删除，尾指针前移
+    bool deleteLast() {
+        if (isEmpty()) {
+            return false;
+        }
+        rear = (rear + 1) % max_size;
+        return true; 
+    }
+    
+    /** Get the front item from the deque. */
+    //直接返回当前头指针数据
+    int getFront() {
+        if (isEmpty()) {
+            return -1;
+        }
+        //printf("front = %d\n",front);
+        return data[front];
+    }
+    
+    /** Get the last item from the deque. */
+    //返回尾指针的前一个数据
+    int getRear() {
+        if (isEmpty()) {
+            return -1;
+        }
+        //printf("rear = %d\n",rear);
+        return data[(rear + 1) % max_size];
+    }
+    
+    /** Checks whether the circular deque is empty or not. */
+    //由于data的长度是k+1，所以rear==front时必是为空时
+    bool isEmpty() {
+        if (rear == front)
+            return true;
+        return false;
+    }
+    
+    /** Checks whether the circular deque is full or not. */
+    //头部追上了尾部，他们差1的时候就满了
+    bool isFull() {
+        if ((rear - front +max_size) % max_size == 1)
+            return true;
+        return false;
+    }
+};
+
+/**
+ * Your MyCircularDeque object will be instantiated and called as such:
+ * MyCircularDeque* obj = new MyCircularDeque(k);
+ * bool param_1 = obj->insertFront(value);
+ * bool param_2 = obj->insertLast(value);
+ * bool param_3 = obj->deleteFront();
+ * bool param_4 = obj->deleteLast();
+ * int param_5 = obj->getFront();
+ * int param_6 = obj->getRear();
+ * bool param_7 = obj->isEmpty();
+ * bool param_8 = obj->isFull();
+ */

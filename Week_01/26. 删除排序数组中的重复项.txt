@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int length = nums.size();
+        if(length < 2){
+            return length;
+        }
+        int last = 0,first=1;
+        while(first < nums.size()){
+            //若和上一次的相同，first指针继续寻找
+            if(nums[first]==nums[last]){
+                first++;
+            }
+            //若不同，last指针的后一位存放新的last，同时first指针继续向前
+            else {
+                nums[++last] = nums[first++];
+            }
+        }
+        //last是最新的不同值的下标，last+1才是所有不同值的数量
+        return last + 1;
+    }
+};
+

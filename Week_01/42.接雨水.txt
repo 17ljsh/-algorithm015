@@ -1,0 +1,28 @@
+//这道题难度是“困难”，就想着自己挑战了一下，花了7 8分钟想出来了用双指针来解决。完成代码后也只是一遍修改就通过了。
+//在以前面试时，碰到这些题都是一脸懵，总是做不出来。
+//这道题和最大矩形类似，都是从两边逼近寻找目标值，只是处理不一样，可能举一反三讲的就是这种吧。
+//然后对比了一下官方的单调栈和双指针，复杂度都是O(N),但栈的逻辑还是有点难理解
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int left = 0,right = height.size()-1;
+        int sum = 0;
+        while (left < right){
+            if (height[left] <= height[right]) {
+                int j =left;
+                while (height[++j] <= height[left] && j < right){
+                    sum += height[left] - height[j]; 
+                }
+                left = j;
+            }
+            else {
+                int j = right;
+                 while (height[--j] <= height[right] && j > left){
+                    sum += height[right] - height[j]; 
+                }
+                right = j;
+            }
+        }
+        return sum;
+    }
+};

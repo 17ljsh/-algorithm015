@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        //这里借图来完成，我对图的使用不是很熟悉，基本理解此代码的逻辑，但扩展到其它题有点困难
+        map<int,int> m;
+        for (int i = 0; i < nums.size(); i++ ) {
+            //利用find（target - nums[i]) 可以只执行一遍循环
+            auto iter = m.find(target  - nums[i]);
+            //判断是否找到这样的数据，同时找到的元素不是当前元素
+            //其实这里我理解了逻辑，但代码的使用并不清楚，iter==m.end()就是没找到？m.end()代表着什么？
+            //如果m里面同时存在多个 k值,当target  - nums[i]==k时，这时的iter->second究竟是什么？
+            //虽然这里说只有唯一的一个答案，不会出现这种问题，但在实际生活中肯定不少见。
+            if(iter!= m.end() && iter->second != i){
+                return {iter->second,i};
+            }
+            //这是没找到，需要把当前数据放进m中
+            m.emplace(nums[i],i);
+        }
+        //没找到
+        return {};
+    }
+};

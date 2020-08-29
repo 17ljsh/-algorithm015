@@ -1,0 +1,16 @@
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        for (int i = digits.size()-1; i>=0 ;i--) {
+            if ((++digits[i])%=10) {//即不产生进位
+                return digits;      //不需要继续进位，则可以直接输出
+            }
+        }
+        digits.insert(digits.begin(),1);
+        return digits;
+    }
+};
+
+//很巧的一个解法
+//判断+1之后不为10就直接返回。
+//若执行整个for循环都没退出，则表示首位有进位。

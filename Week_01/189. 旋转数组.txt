@@ -1,0 +1,15 @@
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int length = nums.size();
+        //这里特别注意k有可能是超过length的，应把他限制在length之内
+        k %= length;
+        reverse(nums.begin(),nums.end());
+        //开始我是用下面这两条语句的，但是这个长度不好记忆
+        // reverse(nums.begin(),nums.end()-k-1);
+        // reverse(nums.begin()+k,nums.end());
+        //由于reverse的两个参数是左闭右开的，相对来说，下面的方式更容易记忆
+        reverse(&nums[0],&nums[k]);
+        reverse(&nums[k],&nums[length]);
+    }
+};
