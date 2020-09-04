@@ -1,0 +1,20 @@
+// 1, 2, 3, 4, 5, 6, 8, 9, 10, 12
+class Solution {
+public:
+	int nthUglyNumber(int n) {
+		vector<int> dp(n, 0);
+		dp[0] = 1;
+		int p2 = 0, p3 = 0, p5 = 0;
+		for (int i = 1; i < n; i++) {
+			dp[i] = min(min(dp[p2] * 2, dp[p3] * 3), dp[p5] * 5);//保证顺序由小到大
+            //不能用if else嵌套， dp[i]可能一对多
+			if (dp[i] == dp[p2] * 2)
+				p2++;
+			if (dp[i] == dp[p3] * 3)
+				p3++;
+			if (dp[i] == dp[p5] * 5)
+				p5++;
+		}
+		return dp[n - 1];
+	}
+};

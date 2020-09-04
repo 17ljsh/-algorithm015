@@ -1,0 +1,14 @@
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if(s.size() != t.size()) return false;
+        int hash[26] = {0};//初始化为0
+        for(char c : s) hash[c - 'a'] ++;
+        for(char c : t) 
+            if(-- hash[c - 'a'] == -1) return false;
+        return true;
+
+    }
+};
+
+//很简单的一道题，但由于之前对map的操作不熟悉，经常出错，换成数组就好很多。

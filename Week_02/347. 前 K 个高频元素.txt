@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        vector<int> res;
+        unordered_map<int,int> m;
+        priority_queue <int,vector<int>,less<int> >q;
+        priority_queue<pair<int,int>> p;
+        //用map记录
+        for ( int i = 0; i < nums.size(); i++ ){
+            m[nums[i]]++;
+        }
+        //转移到优先队列中，将频次也就是second放前面
+        for (auto x:m){
+            p.emplace(x.second,x.first);
+        }
+        //对优先队列取k次对头
+        while (k--) {
+            res.push_back(p.top().second);
+            p.pop();
+        }
+        return res;
+    }
+};
+
+//这道题是自己思考的，原以为还有更好的答案，看了解析也差不多。

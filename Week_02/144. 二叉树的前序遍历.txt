@@ -1,0 +1,28 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        deque<TreeNode*> dq;
+        TreeNode* rt = root;
+        while (rt || !dq.empty()) {
+            while (rt) {//当一直有“左孩子”时，push“右孩子”，纪录val，赋值为自己的左孩子
+                dq.push_front(rt->right);
+                res.push_back(rt->val);
+                rt = rt->left;
+            }
+            //没有左孩子时，从栈顶取出一个
+            rt = dq.front();
+            dq.pop_front();
+        }
+        return res;
+    }          
+};
