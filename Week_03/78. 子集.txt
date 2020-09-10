@@ -1,0 +1,20 @@
+class Solution {
+public:
+    void hleper(vector<vector<int>>& res, vector<int> nums, vector<int> ans, int cur){
+        if (cur == nums.size()) {
+            res.push_back(ans);
+            return ;
+        }
+        //不处理当前层
+        hleper(res,nums,ans,cur + 1);
+        //处理当前层
+        ans.push_back(nums[cur]);
+        hleper(res,nums,ans,cur + 1);
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> ans;
+        hleper(res,nums,ans,0);
+        return res;
+    }
+};

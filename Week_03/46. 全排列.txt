@@ -1,0 +1,52 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    //交换法，使用全局变量，比官方的少传两个参数
+    void hleper(vector<int> nums,int cur) {
+        //cur是最后一个，不用再交换了
+        if (cur == nums.size()-1) {
+            res.push_back(nums);
+        }
+        //从cur开始，依次交换进行递归
+        for (int i = cur; i < nums.size(); i++){
+            swap(nums[i],nums[cur]);
+            hleper(nums,cur+1);
+            //回退操作
+            swap(nums[i],nums[cur]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        hleper(nums,0);
+        return res;
+    }
+};
+/*
+class Solution {
+public:
+    vector<vector<int>> res;
+    void hleper(vector<int> ans,set<int>& s){
+        set<int>::iterator it;
+        set<int>::iterator temp;
+        if (s.empty()) {
+            res.push_back(ans);
+            return ;
+        }
+        for (it = s.begin(); it != s.end();){
+                ans.push_back(*it);
+                temp = it;
+                it++;
+                s.erase(*temp);
+                hleper(ans,s);
+                s.insert(*temp);
+        }
+        return ;
+    }
+
+    vector<vector<int>> permute(vector<int>& nums) {
+        set<int> s(nums.begin(),nums.end());
+        vector<int> ans;
+        hleper(ans,s);
+        return res;
+    }
+};
+*/

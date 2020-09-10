@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    void hleper(vector<int> nums,int cur) {
+        if (cur == nums.size() - 1){
+            res.push_back(nums);
+            return ;
+        }
+        //思路就是重复的就直接跳过，但是自己耗时很久都没做出来
+        //大佬给了一个set的思路是比较符合我的，还有利用图七拐八拐的太多余
+        set<int> s;
+        for (int i = cur; i < nums.size(); i++){
+            if (s.count(nums[i])) {
+                continue;
+            }
+            swap(nums[i],nums[cur]);
+            hleper(nums,cur+1);
+            swap(nums[i],nums[cur]);
+            s.insert(nums[i]);
+        }
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        hleper(nums,0);
+        return res;
+    }
+};

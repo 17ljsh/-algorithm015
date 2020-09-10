@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+ //思路：
+ //如果当前结点是其中之一，那么返回当前结点
+ //如果不是，再分别查找当前结点的左右结点
+ //为何一定正确？
+ //当前结点是其中之一，那么结点的祖先结点一定不会返回null
+ //那么怎么保证最终结果一定是最近祖先结点
+ //在到达目标结点的最近祖先结点之前，其它祖先结点的另一支肯定是null，所以这些结点的返回值都是目标结点。
+ //而对于最近祖先，左右两只都不为空，结果返回当前结点。
+ //从最近祖先到根节点，其它祖先结点的另一支也是null，所以返回的是最近祖先结点
+
+ //然后讨论一个特殊情况，一个目标结点是另一个目标结点的祖先
+ //这样，程序找到一个结点后是不会继续探下去的，所以其它支的查找结果都是null
+ //因此，在返回的过程中，每个结点因为有一支必是null，所以返回的都是找到的第一个结点，也就是他们的最近共同祖先
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (!root) {
+            return NULL;
+        }
+        if (root == q || root == p) {
+            return root;
+        }
+        TreeNode* lNode = lowestCommonAncestor(root->left, p, q);
+        TreeNode* rNode = lowestCommonAncestor(root->right, p, q);
+
+        if (lNode && rNode) {
+            return root;
+        }
+        else if (!rNode) {
+            return lNode;
+        }
+        else {
+            return rNode;
+        }
+        return NULL;
+    }
+};

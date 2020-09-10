@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    void hleper(vector<int> ans,int n,int cur,int k){
+        //不够了
+        if (ans.size() + n - cur + 1 < k){
+            return;
+        }
+        //满了
+         if (ans.size() == k) {
+             res.push_back(ans);
+             return ;
+         }
+         //借用官方的题解
+         //考虑当前元素
+         ans.push_back(cur);
+         hleper(ans,n,cur+1,k);
+         ans.pop_back();
+
+         //不考虑当前元素
+         hleper(ans,n,cur+1,k);
+
+         //以下是我个人的想法，打败27.31%
+        //  for (int i = cur; i <= n;i++){
+        //      ans.push_back(i);
+        //      hleper(ans,n,i + 1,k);
+        //      ans.pop_back();
+        //  }
+    }
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> ans;
+        hleper(ans,n,1,k);
+        return res;
+    }
+};

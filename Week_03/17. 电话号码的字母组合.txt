@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<string> res;
+    string str;
+    string digists;
+    int size;
+    unordered_map<char,string> m{{'2',"abc"},
+                                {'3',"def"},
+                                {'4',"ghi"},
+                                {'5',"jkl"},
+                                {'6',"mno"},
+                                {'7',"pqrs"},
+                                {'8',"tuv"},
+                                {'9',"wxyz"}};
+    void hleper(int cur) {
+        if (cur == size) {
+            res.push_back(str);
+            return;
+        }
+        char now = digists[cur];
+        for (char ch:m[now]) {
+            str.push_back(ch);
+            hleper(cur + 1);
+            str.pop_back();
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        digists = digits;
+        size = digits.size();
+        if (size == 0) {
+            return res;
+        }
+        hleper(0);
+        return res;
+    }
+};

@@ -1,0 +1,35 @@
+/*
+我用了分治法，但在提交时超出时间限制了。测试了几个数据结果没错，麻烦助教帮我看看逻辑是否有误
+//时间复杂度 f(n) = f(n-1) + O(1),这样时间复杂度不是O(n)吗？而官方题解有一个O(nlogn)是可以通过的
+*/
+class Solution {
+public:
+    int hleper(vector<int> nums,int start,int& size){
+        //最后一个
+        if ( start == nums.size()-1){
+            size = 1;
+            return nums[start];
+        }
+        //获取start后面最多的数
+        int num = hleper(nums,start+1,size);
+        //处理子问题
+        if (nums[start] == num) {
+            size++;
+            return num;
+        }
+        else if (size >0){
+            size--;
+            return num;
+        }
+        //更新最多的元素
+        else {
+            size = 1;
+            return nums[start];
+        }
+    }
+    int majorityElement(vector<int>& nums) {
+        int size = 0;
+        int res = hleper(nums,0,size);
+        return res;
+    }
+};
