@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        int l(1),r(num);
+        while(l <= r) {
+            int mid = l + (r - l) / 2;
+            //一开始用mid*mid来判断，但这个容易越界
+            //所以改用商来判断
+            int rex = num / mid;
+            //rex和mid相等时不一定就正确，比如：10 / 3 == 3，所以还要有rex*mid == num
+            if (rex == mid && mid * mid == num) {
+                return true;
+            }
+            //商比mid大，说明mid小于平方根
+            else if(rex > mid) {
+                l = mid + 1;
+            }
+            else {
+                r = mid - 1;
+            }
+        }
+        return false;
+    }
+};

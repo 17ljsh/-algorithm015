@@ -1,0 +1,42 @@
+class Solution {
+    int hleper(vector<int> nums,int target, int l, int r) {
+        if (l > r) {
+            return -1;
+        }
+        int mid = l + (r - l) / 2;
+        printf("mid = %d",mid);
+        int res;
+        if (target == nums[mid]) {
+            return mid;
+        }
+        else if (target > nums[mid]) {
+            if (nums[mid] <= nums[l]) {
+                res = hleper(nums,target,l,mid-1);
+                if (res != -1) {
+                    return res;
+                }
+            }
+            res =  hleper(nums,target,mid + 1,r);
+            if (res != -1) {
+                return res;
+            }       
+        }
+        else {
+            if (nums[mid] >= nums[l]) {
+                res = hleper(nums,target,mid + 1,r);
+                if (res != -1) {
+                    return res;
+                }
+            }
+            res =  hleper(nums,target,l,mid - 1);
+            if (res != -1) {
+                return res;
+            }
+        }
+        return -1;
+    }
+public:
+    int search(vector<int>& nums, int target) {
+        return hleper(nums,target,0,nums.size()-1);
+    }
+};

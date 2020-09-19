@@ -1,0 +1,42 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int rowlo(0),rowhi,collo(0),colhi;
+        rowhi = matrix.size()-1;
+        if (rowhi == -1) {
+            return false;
+        }
+        colhi = matrix[0].size()-1;
+        while (rowlo <= rowhi && collo <= colhi) {
+            if (rowlo == rowhi) {
+                //查找列
+                int colmid = collo + (colhi - collo) / 2;
+                if (matrix[rowlo][colmid] == target) {
+                    return true;
+                }
+                else if (matrix[rowlo][colmid] < target) {
+                    collo = colmid + 1;
+                }
+                else {
+                    colhi = colmid - 1;
+                }
+            }
+            else {
+                //查找行，逻辑有点乱
+                int rowmid = rowlo + (rowhi - rowlo) / 2;
+                if (matrix[rowmid][0] == target) {
+                    return true;
+                }
+                else if (matrix[rowmid][0] < target) {
+                    if (rowmid < matrix.size() - 1 && matrix[rowmid + 1][0] <= target)
+                        rowlo = rowmid + 1;
+                    else rowhi = rowmid;
+                }
+                else {
+                    rowhi = rowmid - 1;
+                }
+            }
+        }
+        return false;
+    }
+};
